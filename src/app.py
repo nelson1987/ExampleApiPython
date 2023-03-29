@@ -1,4 +1,6 @@
 from flask import Flask, jsonify, request
+from flask_swagger import swagger
+from flask_swagger_ui import get_swaggerui_blueprint
 
 app = Flask(__name__)
 
@@ -17,12 +19,64 @@ tasks = [
     }
 ]
 
+SWAGGER_URL = '/api/docs'  # URL da página do Swagger UI
+API_URL = '/swagger'  # URL do JSON da especificação Swagger
+
+swaggerui_blueprint = get_swaggerui_blueprint(
+    SWAGGER_URL,
+    API_URL,
+    config={
+            'app_name': "Web API RESTful em Python com Flask"
+    }
+)
+
+# Registra o blueprint do Swagger UI na aplicação
+app.register_blueprint(swaggerui_blueprint, url_prefix=SWAGGER_URL)
+
+
+@app.route('/swagger')
+def api_swagger():
+    swag = swagger(app)
+    swag['info']['version'] = "1.0"
+    swag['info']['title'] = "Web API RESTful em Python com Flask"
+    return jsonify(swag)
+
 @app.route('/tasks', methods=['GET'])
 def get_tasks():
-    return jsonify({'tasks': tasks})
+    """
+    Obtém todas as tarefas.
+    ---
+    tags:
+      - tarefas
+    responses:
+      200:
+        description: Lista de todas as tarefas.
+        schema:
+          type: array
+        #   items:
+        #     $ref: '#/tasks'
+      401:
+        description: Não autorizado.
+    """
+    return jsonify(tasks)
 
 @app.route('/tasks/<int:task_id>', methods=['GET'])
 def get_task(task_id):
+    """
+    Obtém a tarefa por id.
+    ---
+    tags:
+      - tarefas
+    responses:
+      200:
+        description: Consultar tarefa.
+        schema:
+          type: array
+        #   items:
+        #     $ref: '#/tasks'
+      401:
+        description: Não autorizado.
+    """
     task = [task for task in tasks if task['id'] == task_id]
     if len(task) == 0:
         abort(404)
