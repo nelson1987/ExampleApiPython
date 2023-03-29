@@ -1,49 +1,61 @@
 # Web API RESTful em Python com Flask
 
-Este projeto é uma API que permite aos usuários criar, ler, atualizar e excluir tarefas em uma lista. Ele foi criado usando Python e Flask.
+Este é um projeto de exemplo para uma Web API RESTful em Python com Flask.
+
+## Descrição
+
+A Web API permite gerenciar uma lista de tarefas. A lista pode ser visualizada, adicionada, atualizada e excluída por meio de solicitações HTTP.
+
+## Endpoints
+
+| Método | Endpoint | Descrição |
+|--------|----------|-----------|
+| GET    | /tasks   | Obtém todas as tarefas. |
+| GET    | /tasks/:id | Obtém uma tarefa específica. |
+| POST   | /tasks   | Cria uma nova tarefa. |
+| PUT    | /tasks/:id | Atualiza uma tarefa existente. |
+| DELETE | /tasks/:id | Exclui uma tarefa existente. |
+
+## Requisitos
+
+- Python 3.x
+- Flask
+- Flask-RESTful
 
 ## Instalação
 
-Para executar este projeto, você precisa ter o Python e o Flask instalados em seu computador. Para instalar o Flask, execute o seguinte comando:
-```
-pip install flask
-```
-## Executando a API
+1. Clone este repositório.
+2. Instale as dependências do projeto com o comando `pip install -r requirements.txt`.
+3. Execute o arquivo `app.py`.
 
-Para executar a API, execute o seguinte comando no terminal:
-```
-python app.py
-```
-Isso iniciará a API na porta 5000. Você pode acessá-la usando a seguinte URL:
-```
-http://localhost:5000
-```
-## Rotas
+## Documentação
 
-A API tem as seguintes rotas:
-
-- `GET /tasks`: retorna uma lista de todas as tarefas.
-- `GET /tasks/<int:task_id>`: retorna uma tarefa específica com o ID fornecido.
-- `POST /tasks`: cria uma nova tarefa com base nos dados fornecidos no corpo da solicitação.
-- `PUT /tasks/<int:task_id>`: atualiza uma tarefa existente com base nos dados fornecidos no corpo da solicitação.
-- `DELETE /tasks/<int:task_id>`: exclui uma tarefa existente com base no ID fornecido.
+A documentação da API pode ser encontrada em [http://localhost:5000/docs](http://localhost:5000/docs). A documentação foi criada com o Swagger.
 
 ## Exemplo de solicitação
 
-Aqui está um exemplo de como criar uma nova tarefa usando a API:
-```
-POST /tasks
+### Obtendo todas as tarefas
+
+`GET /tasks`
+
+### Resposta
+
+[
 {
-"title": "Estudar Flask",
-"description": "Estudar Flask para melhorar minhas habilidades de desenvolvimento web."
+"id": 1,
+"title": "Comprar leite",
+"description": "Comprar leite no supermercado.",
+"done": false
+},
+{
+"id": 2,
+"title": "Estudar Python",
+"description": "Estudar Python por 1 hora.",
+"done": true
 }
-```
-Isso criará uma nova tarefa com o título "Estudar Flask" e a descrição "Estudar Flask para melhorar minhas habilidades de desenvolvimento web." O ID da tarefa será gerado automaticamente.
+]
 
-## Contribuindo
-
-Se você quiser contribuir com este projeto, sinta-se à vontade para enviar um pull request. Toda contribuição é bem-vinda!
 
 ## Licença
 
-Este projeto está licenciado sob a licença MIT. Veja o arquivo LICENSE para obter mais informações.
+Este projeto está licenciado sob a Licença MIT. Consulte o arquivo `LICENSE` para obter mais informações.
