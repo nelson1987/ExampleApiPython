@@ -30,7 +30,7 @@ A Web API permite gerenciar uma lista de tarefas. A lista pode ser visualizada, 
 
 ## Documentação
 
-A documentação da API pode ser encontrada em [http://localhost:5000/docs](http://localhost:5000/docs). A documentação foi criada com o Swagger.
+A documentação da API pode ser encontrada em [http://localhost:5000/api/docs](http://localhost:5000/api/docs). A documentação foi criada com o Swagger.
 
 ## Exemplo de solicitação
 
@@ -39,7 +39,7 @@ A documentação da API pode ser encontrada em [http://localhost:5000/docs](http
 `GET /tasks`
 
 ### Resposta
-
+'''
 [
 {
 "id": 1,
@@ -54,7 +54,7 @@ A documentação da API pode ser encontrada em [http://localhost:5000/docs](http
 "done": true
 }
 ]
-
+'''
 
 ## Licença
 
