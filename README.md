@@ -39,7 +39,7 @@ A documentação da API pode ser encontrada em [http://localhost:5000/api/docs](
 `GET /tasks`
 
 ### Resposta
-'''
+ˋˋˋ
 [
 {
 "id": 1,
@@ -54,7 +54,7 @@ A documentação da API pode ser encontrada em [http://localhost:5000/api/docs](
 "done": true
 }
 ]
-'''
+ˋˋˋ
 
 ## Licença
 
