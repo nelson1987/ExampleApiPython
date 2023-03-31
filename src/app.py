@@ -2,7 +2,7 @@ from flask import Flask, jsonify, request
 from flask_swagger import swagger
 from flask_swagger_ui import get_swaggerui_blueprint
 from Commands.Users.CreateCommand import CriarUsuarioCommand
-from Services import UsuarioService
+from Services.Usuario_Service import UsuarioService
 
 app = Flask(__name__)
 
@@ -133,10 +133,9 @@ def create_task():
     if not request.json or not 'title' in request.json:
          abort(400)
     command = CriarUsuarioCommand(request.json['title'], request.json.get('description', ''))
-    service = UsuarioService #().Criar_Usuario(command)
+    service = UsuarioService()
     service.Criar_Usuario(command)
-    tasks.append(command)
-    return jsonify({'task': command}), 201
+    return jsonify({'user': command.to_dict()}), 201
 
 @app.route('/tasks/<int:task_id>', methods=['PUT'])
 def update_task(task_id):

@@ -1,13 +1,13 @@
 class UsuarioService:
     def Criar_Usuario(self, command):
         # Validar o comando
-        if command.nome == '':
+        if command.title == '':
             raise Exception('Nome do usuário é obrigatório.')
         
-        if command.email == '':
+        if command.description == '':
             raise Exception('E-mail do usuário é obrigatório.')
         
-        if command.senha == '':
+        if command.done == '':
             raise Exception('Senha do usuário é obrigatória.')
         
         # Executar a operação
