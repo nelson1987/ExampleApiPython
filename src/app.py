@@ -1,6 +1,8 @@
 from flask import Flask, jsonify, request
 from flask_swagger import swagger
 from flask_swagger_ui import get_swaggerui_blueprint
+from Commands.Users.CreateCommand import CriarUsuarioCommand
+from Services import UsuarioService
 
 app = Flask(__name__)
 
@@ -33,7 +35,6 @@ swaggerui_blueprint = get_swaggerui_blueprint(
 # Registra o blueprint do Swagger UI na aplicação
 app.register_blueprint(swaggerui_blueprint, url_prefix=SWAGGER_URL)
 
-
 @app.route('/swagger')
 def api_swagger():
     swag = swagger(app)
@@ -42,6 +43,7 @@ def api_swagger():
     return jsonify(swag)
 
 @app.route('/tasks', methods=['GET'])
+#@app.response(200, "Busca realizada com sucesso")
 def get_tasks():
     """
     Obtém todas as tarefas.
@@ -83,17 +85,58 @@ def get_task(task_id):
     return jsonify({'task': task[0]})
 
 @app.route('/tasks', methods=['POST'])
+#@app.param('title','Nome da pessoa')
+#@app.param('description','Endereço da pessoa')
 def create_task():
+    """
+    Criar a tarefa por id.
+    ---
+    tags:
+      - tarefas
+    summary: Update an existing pet
+    description: Update an existing pet by Id
+    operationId: updatePet
+    consumes:
+    - "application/json"
+    parameters:
+    -   in: "body"
+        name: "body"
+        required: true
+        schema:
+            type: object
+            properties:
+                title: 
+                    type: string
+                    description: Título da Tarefa
+                    example: Titulo
+                description: 
+                    type: string
+                    description: Descrição da Tarefa
+                    example: Descricao
+    responses:
+      200:
+        description: Criar tarefa.
+        schema:
+          type: object
+          properties: 
+            title: 
+                type: string
+                description: Título da Tarefa
+                example: Titulo
+            description: 
+                type: string
+                description: Descrição da Tarefa
+                example: Descricao
+      401:
+        description: Não autorizado.
+    """
     if not request.json or not 'title' in request.json:
-        abort(400)
-    task = {
-        'id': tasks[-1]['id'] + 1,
-        'title': request.json['title'],
-        'description': request.json.get('description', ''),
-        'done': False
-    }
-    tasks.append(task)
-    return jsonify({'task': task}), 201
+         abort(400)
+    command = CriarUsuarioCommand(request.json['title'], request.json.get('description', ''))
+    service = UsuarioService #().Criar_Usuario(command)
+    service.Criar_Usuario(command)
+    tasks.append(command)
+    return jsonify({'task': command}), 201
 
 @app.route('/tasks/<int:task_id>', methods=['PUT'])
 def update_task(task_id):
