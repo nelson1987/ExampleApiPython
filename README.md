@@ -41,18 +41,18 @@ A documentação da API pode ser encontrada em [http://localhost:5000/api/docs](
 ### Resposta
 ~~~json
 [
-{
-"id": 1,
-"title": "Comprar leite",
-"description": "Comprar leite no supermercado.",
-"done": false
-},
-{
-"id": 2,
-"title": "Estudar Python",
-"description": "Estudar Python por 1 hora.",
-"done": true
-}
+    {
+        "id": 1,
+        "title": "Comprar leite",
+        "description": "Comprar leite no supermercado.",
+        "done": false
+    },
+    {
+        "id": 2,
+        "title": "Estudar Python",
+        "description": "Estudar Python por 1 hora.",
+        "done": true
+    }
 ]
 ~~~
 
