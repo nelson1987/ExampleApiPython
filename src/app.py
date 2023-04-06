@@ -1,8 +1,9 @@
 from flask import Flask, jsonify, request
 from flask_swagger import swagger
 from flask_swagger_ui import get_swaggerui_blueprint
-from Commands.Users.CreateCommand import CriarUsuarioCommand
-from Services.Usuario_Service import UsuarioService
+from Repositories.User_Repository import UserRepository
+# from Commands.Users.CreateCommand import CriarUsuarioCommand
+# from Services.Usuario_Service import UsuarioService
 
 app = Flask(__name__)
 
@@ -60,102 +61,103 @@ def get_tasks():
       401:
         description: Não autorizado.
     """
+    usuarios = UserRepository.ListarUsuarios()
     return jsonify(tasks)
 
-@app.route('/tasks/<int:task_id>', methods=['GET'])
-def get_task(task_id):
-    """
-    Obtém a tarefa por id.
-    ---
-    tags:
-      - tarefas
-    responses:
-      200:
-        description: Consultar tarefa.
-        schema:
-          type: array
-        #   items:
-        #     $ref: '#/tasks'
-      401:
-        description: Não autorizado.
-    """
-    task = [task for task in tasks if task['id'] == task_id]
-    if len(task) == 0:
-        abort(404)
-    return jsonify({'task': task[0]})
+# @app.route('/tasks/<int:task_id>', methods=['GET'])
+# def get_task(task_id):
+#     """
+#     Obtém a tarefa por id.
+#     ---
+#     tags:
+#       - tarefas
+#     responses:
+#       200:
+#         description: Consultar tarefa.
+#         schema:
+#           type: array
+#         #   items:
+#         #     $ref: '#/tasks'
+#       401:
+#         description: Não autorizado.
+#     """
+#     task = [task for task in tasks if task['id'] == task_id]
+#     if len(task) == 0:
+#         abort(404)
+#     return jsonify({'task': task[0]})
 
-@app.route('/tasks', methods=['POST'])
-#@app.param('title','Nome da pessoa')
-#@app.param('description','Endereço da pessoa')
-def create_task():
-    """
-    Criar a tarefa por id.
-    ---
-    tags:
-      - tarefas
-    summary: Update an existing pet
-    description: Update an existing pet by Id
-    operationId: updatePet
-    consumes:
-    - "application/json"
-    parameters:
-    -   in: "body"
-        name: "body"
-        required: true
-        schema:
-            type: object
-            properties:
-                title: 
-                    type: string
-                    description: Título da Tarefa
-                    example: Titulo
-                description: 
-                    type: string
-                    description: Descrição da Tarefa
-                    example: Descricao
-    responses:
-      200:
-        description: Criar tarefa.
-        schema:
-          type: object
-          properties: 
-            title: 
-                type: string
-                description: Título da Tarefa
-                example: Titulo
-            description: 
-                type: string
-                description: Descrição da Tarefa
-                example: Descricao
-      401:
-        description: Não autorizado.
-    """
-    if not request.json or not 'title' in request.json:
-         abort(400)
-    command = CriarUsuarioCommand(request.json['title'], request.json.get('description', ''))
-    service = UsuarioService()
-    service.Criar_Usuario(command)
-    return jsonify({'user': command.to_dict()}), 201
+# @app.route('/tasks', methods=['POST'])
+# #@app.param('title','Nome da pessoa')
+# #@app.param('description','Endereço da pessoa')
+# def create_task():
+#     """
+#     Criar a tarefa por id.
+#     ---
+#     tags:
+#       - tarefas
+#     summary: Update an existing pet
+#     description: Update an existing pet by Id
+#     operationId: updatePet
+#     consumes:
+#     - "application/json"
+#     parameters:
+#     -   in: "body"
+#         name: "body"
+#         required: true
+#         schema:
+#             type: object
+#             properties:
+#                 title: 
+#                     type: string
+#                     description: Título da Tarefa
+#                     example: Titulo
+#                 description: 
+#                     type: string
+#                     description: Descrição da Tarefa
+#                     example: Descricao
+#     responses:
+#       200:
+#         description: Criar tarefa.
+#         schema:
+#           type: object
+#           properties: 
+#             title: 
+#                 type: string
+#                 description: Título da Tarefa
+#                 example: Titulo
+#             description: 
+#                 type: string
+#                 description: Descrição da Tarefa
+#                 example: Descricao
+#       401:
+#         description: Não autorizado.
+#     """
+#     if not request.json or not 'title' in request.json:
+#          abort(400)
+#     command = CriarUsuarioCommand(request.json['title'], request.json.get('description', ''))
+#     service = UsuarioService()
+#     service.Criar_Usuario(command)
+#     return jsonify({'user': command.to_dict()}), 201
 
-@app.route('/tasks/<int:task_id>', methods=['PUT'])
-def update_task(task_id):
-    task = [task for task in tasks if task['id'] == task_id]
-    if len(task) == 0:
-        abort(404)
-    if not request.json:
-        abort(400)
-    task[0]['title'] = request.json.get('title', task[0]['title'])
-    task[0]['description'] = request.json.get('description', task[0]['description'])
-    task[0]['done'] = request.json.get('done', task[0]['done'])
-    return jsonify({'task': task[0]})
+# @app.route('/tasks/<int:task_id>', methods=['PUT'])
+# def update_task(task_id):
+#     task = [task for task in tasks if task['id'] == task_id]
+#     if len(task) == 0:
+#         abort(404)
+#     if not request.json:
+#         abort(400)
+#     task[0]['title'] = request.json.get('title', task[0]['title'])
+#     task[0]['description'] = request.json.get('description', task[0]['description'])
+#     task[0]['done'] = request.json.get('done', task[0]['done'])
+#     return jsonify({'task': task[0]})
 
-@app.route('/tasks/<int:task_id>', methods=['DELETE'])
-def delete_task(task_id):
-    task = [task for task in tasks if task['id'] == task_id]
-    if len(task) == 0:
-        abort(404)
-    tasks.remove(task[0])
-    return jsonify({'result': True})
+# @app.route('/tasks/<int:task_id>', methods=['DELETE'])
+# def delete_task(task_id):
+#     task = [task for task in tasks if task['id'] == task_id]
+#     if len(task) == 0:
+#         abort(404)
+#     tasks.remove(task[0])
+#     return jsonify({'result': True})
 
 if __name__ == '__main__':
     app.run(debug=True)
