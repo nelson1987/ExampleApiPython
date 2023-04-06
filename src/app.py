@@ -1,9 +1,9 @@
 from flask import Flask, jsonify, request
 from flask_swagger import swagger
 from flask_swagger_ui import get_swaggerui_blueprint
-from Repositories.User_Repository import UserRepository
+# from Repositories.User_Repository import UserRepository
 # from Commands.Users.CreateCommand import CriarUsuarioCommand
-# from Services.Usuario_Service import UsuarioService
+from Services.User_Service import UserService
 
 app = Flask(__name__)
 
@@ -61,8 +61,8 @@ def get_tasks():
       401:
         description: Não autorizado.
     """
-    usuarios = UserRepository.ListarUsuarios()
-    return jsonify(tasks)
+    usuarios = UserService.Listar_Usuario()
+    return jsonify(usuarios)
 
 # @app.route('/tasks/<int:task_id>', methods=['GET'])
 # def get_task(task_id):
@@ -105,7 +105,9 @@ def get_tasks():
 #         name: "body"
 #         required: true
 #         schema:
-#             type: object
+#             type: object            
+#             required: 
+#               - title
 #             properties:
 #                 title: 
 #                     type: string

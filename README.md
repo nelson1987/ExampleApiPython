@@ -27,6 +27,7 @@ A Web API permite gerenciar uma lista de tarefas. A lista pode ser visualizada, 
 1. Clone este repositório.
 2. Instale as dependências do projeto com o comando `pip install -r requirements.txt`.
 3. Execute o arquivo `app.py`.
+4. Em caso de dúvida. Leia o artigo: https://www.alura.com.br/artigos/ambientes-virtuais-em-python?gclid=Cj0KCQjw27mhBhC9ARIsAIFsETEYzR5GXvE9l4XP0Bub9j6AkGceGg4Gqwp2s0d12xJ5uQtGahWVN9kaAgAPEALw_wcB
 
 ## Documentação
 

@@ -1,4 +1,7 @@
-class UsuarioService:
+from Repositories.User_Repository import UserRepository
+class UserService:
+    def Listar_Usuario():
+        return UserRepository.ListarUsuarios()
     def Criar_Usuario(self, command):
         # Validar o comando
         if command.title == '':
